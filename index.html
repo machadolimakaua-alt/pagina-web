@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoOfertas - Carros Acessíveis</title>
     <style>
-        /* CSS Integrado */
         * {
             margin: 0;
             padding: 0;
@@ -137,6 +137,80 @@
             background-color: #2980b9;
         }
 
+        /* --- Estilos do Modal (Pop-up) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.ativo {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-conteudo {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-fechar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .btn-fechar:hover {
+            color: #000;
+        }
+
+        .modal-galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .modal-galeria img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .modal-detalhes-lista {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .modal-detalhes-lista li {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -150,14 +224,14 @@
 
     <header>
         <h1>AutoOfertas</h1>
-        <p>Os melhores seminovos e pop's com preços que cabem no seu bolso!</p>
+        <p>Os melhores seminovos e populares com preços que cabem no seu bolso!</p>
     </header>
 
     <div class="container">
         <div class="grid-carros">
 
             <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80" alt="Carro Popular Econômico" class="card-imagem">
+                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80" alt="Fiat Uno" class="card-imagem">
                 <div class="card-conteudo">
                     <h2 class="card-titulo">Fiat Uno 1.0</h2>
                     <p class="card-descricao">Econômico, compacto e perfeito para o dia a dia na cidade.</p>
@@ -171,13 +245,23 @@
                     </div>
                     <div class="card-preco">R$ 28.900</div>
                 </div>
-                <button class="btn-comprar">Tenho Interesse</button>
+                <button class="btn-comprar" onclick="abrirModal(
+                    'Fiat Uno 1.0', 
+                    'R$ 28.900', 
+                    'Veículo em excelente estado de conservação. Ideal para quem busca rodar muito gastando pouco combustível.', 
+                    ['2018/2019', '45.000 km', 'Manual', 'Flex (Álcool/Gasolina)'],
+                    [
+                        'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80'
+                    ]
+                )">Tenho Interesse</button>
             </div>
 
             <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Carro Hatch Chevrolet" class="card-imagem">
+                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Chevrolet Onix" class="card-imagem">
                 <div class="card-conteudo">
-                    <h2 class="card-titulo">Chevrolet Onix</h2>
+                    <h2 class="card-titulo">Chevrolet Onix 1.0</h2>
                     <p class="card-descricao">Conforto, central multimídia e excelente consumo de combustível.</p>
                     <div class="secao-cores">
                         <span>Cores disponíveis:</span>
@@ -189,153 +273,36 @@
                     </div>
                     <div class="card-preco">R$ 45.500</div>
                 </div>
-                <button class="btn-comprar">Tenho Interesse</button>
+                <button class="btn-comprar" onclick="abrirModal(
+                    'Chevrolet Onix 1.0', 
+                    'R$ 45.500', 
+                    'Equipado com central multimídia MyLink, ar-condicionado, direção elétrica e vidros elétricos nas 4 portas.', 
+                    ['2020/2021', '32.000 km', 'Manual', 'Flex'],
+                    [
+                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80'
+                    ]
+                )">Tenho Interesse</button>
             </div>
 
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80" alt="Carro Vermelho Esportivo" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Hyundai HB20</h2>
-                    <p class="card-descricao">Design moderno, direção elétrica e ótimo espaço interno.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #c0392b;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 42.000</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
+        </div>
+    </div>
 
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80" alt="Carro Volkswagen" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Volkswagen Gol</h2>
-                    <p class="card-descricao">O clássico brasileiro. Robusto, manutenção barata e confiável.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #2c3e50;" title="Preto"></span>
-                            <span class="bolinha-cor" style="background-color: #bdc3c7;" title="Prata"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 35.000</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
+    <div class="modal-overlay" id="modalCarro">
+        <div class="modal-conteudo">
+            <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+            <h2 id="modalTitulo" class="card-titulo"></h2>
+            <div id="modalPreco" class="card-preco"></div>
+            <p id="modalDescricao" style="margin-top: 10px; color: #555;"></p>
+            
+            <h3 style="margin-top: 20px; font-size: 1.1rem;">Especificações:</h3>
+            <ul class="modal-detalhes-lista" id="modalListaEspecificacoes"></ul>
 
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80" alt="Carro Renault Sandero" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Renault Sandero</h2>
-                    <p class="card-descricao">Muito espaço no porta-malas e ótimo espaço para passageiros.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #f1c40f;" title="Amarelo"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 38.900</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
+            <h3 style="margin-top: 20px; font-size: 1.1rem;">Mais Imagens:</h3>
+            <div class="modal-galeria" id="modalGaleria"></div>
 
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Carro Ford Ka" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Ford Ka</h2>
-                    <p class="card-descricao">Motor forte, ágil no trânsito e com ótimo ar-condicionado.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #2980b9;" title="Azul"></span>
-                            <span class="bolinha-cor" style="background-color: #e74c3c;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 37.500</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80" alt="Carro SUV Compacto" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Renault Kwid</h2>
-                    <p class="card-descricao">O SUV dos compactos. Altura do solo excelente e super econômico.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #e67e22;" title="Laranja"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #34495e;" title="Verde Escuro"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 39.900</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80" alt="Carro Fiat Palio" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Fiat Palio</h2>
-                    <p class="card-descricao">Ideal para primeiro carro. Manutenção acessível e resistente.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #95a5a6;" title="Prata"></span>
-                            <span class="bolinha-cor" style="background-color: #e74c3c;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #2c3e50;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 24.500</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80" alt="Carro Toyota Etios" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Toyota Etios</h2>
-                    <p class="card-descricao">Mecânica inquebrável, muito confortável e direção macia.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 41.000</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80" alt="Carro Nissan March" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Nissan March</h2>
-                    <p class="card-descricao">Motor japonês valente, fácil de estacionar e completo de série.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #c0392b;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #2980b9;" title="Azul"></span>
-                            <span class="bolinha-cor" style="background-color: #bdc3c7;" title="Prata"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 36.800</div>
-                </div>
-                <button class="btn-comprar">Tenho Interesse</button>
-            </div>
-
+            <button class="btn-comprar" style="margin-top: 20px;" onclick="alert('Obrigado pelo interesse! Entraremos em contato.')">Falar com Consultor</button>
         </div>
     </div>
 
@@ -343,6 +310,48 @@
         <p>&copy; 2026 AutoOfertas - Todos os direitos reservados.</p>
     </footer>
 
+    <script>
+        function abrirModal(titulo, preco, descricao, especificacoes, imagens) {
+            document.getElementById('modalTitulo').innerText = titulo;
+            document.getElementById('modalPreco').innerText = preco;
+            document.getElementById('modalDescricao').innerText = descricao;
+
+            // Preenche as especificações
+            const listaSpecs = document.getElementById('modalListaEspecificacoes');
+            listaSpecs.innerHTML = '';
+            especificacoes.forEach(spec => {
+                const li = document.createElement('li');
+                li.innerText = '✔ ' + spec;
+                listaSpecs.appendChild(li);
+            });
+
+            // Preenche a galeria de imagens
+            const galeria = document.getElementById('modalGaleria');
+            galeria.innerHTML = '';
+            imagens.forEach(urlImg => {
+                const img = document.createElement('img');
+                img.src = urlImg;
+                galeria.appendChild(img);
+            });
+
+            // Exibe a janela
+            document.getElementById('modalCarro').classList.add('ativo');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalCarro').classList.remove('ativo');
+        }
+
+        // Fecha o modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalCarro');
+            if (event.target === modal) {
+                fecharModal();
+            }
+        }
+    </script>
+
 </body>
 </html>
 
+    
