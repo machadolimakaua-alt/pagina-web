@@ -4,7 +4,7 @@ HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoOfertas - Carros Acessíveis & Esportivos</title>
+    <title>AutoOfertas - Carros Esportivos e Populares</title>
     <style>
         * {
             margin: 0;
@@ -132,7 +132,6 @@ HTML
             background-color: #2563eb;
             color: #fff;
             text-align: center;
-            text-decoration: none;
             font-weight: bold;
             border: none;
             cursor: pointer;
@@ -143,14 +142,14 @@ HTML
             background-color: #1d4ed8;
         }
 
-        /* --- Estilos do Modal --- */
+        /* --- Estilos do Modal (Pop-up) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -239,289 +238,7 @@ HTML
     </header>
 
     <div class="container">
-        <div class="grid-carros">
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Chevrolet Onix RS Turbo" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Chevrolet Onix RS 1.0 Turbo</h2>
-                    <p class="card-descricao">Design esportivo exclusivo RS, aerofólio traseiro, gravata Chevrolet preta e motor Turbo.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #e74c3c;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 78.900</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Chevrolet Onix RS 1.0 Turbo', 
-                    'R$ 78.900', 
-                    'Versão esportiva com acabamento escurecido, rodas liga leve 16 polegadas em preto brilhante, bancos de couro com costuras vermelhas e excelente desempenho turbo.', 
-                    ['Ano: 2022/2023', 'Quilometragem: 28.000 km', 'Câmbio: Automático 6 marchas', 'Motor: 1.0 Turbo Flex (116 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80" alt="Volkswagen Polo GTS" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Volkswagen Polo GTS 250 TSI</h2>
-                    <p class="card-descricao">Esportividade genuína com faróis IQ.Light, motor 1.4 TSI e seletor de modos de condução.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #c0392b;" title="Vermelho Sunset"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza Platinum"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto Ninja"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 115.000</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Volkswagen Polo GTS 1.4 TSI', 
-                    'R$ 115.000', 
-                    'Hot hatch completo com bancos esportivos estilo concha, friso vermelho na grade dianteira, painel digital Active Info Display e motor potente.', 
-                    ['Ano: 2021/2022', 'Quilometragem: 35.000 km', 'Câmbio: Automático 6 marchas Tiptronic', 'Motor: 1.4 TSI Turbo (150 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80" alt="Hyundai HB20 Sport" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Hyundai HB20 Sport 1.0 Turbo</h2>
-                    <p class="card-descricao">Visual arrojado com saias laterais, pedaleiras em alumínio e rodas escurecidas.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #2980b9;" title="Azul"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #34495e;" title="Cinza"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 68.500</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Hyundai HB20 Sport 1.0 Turbo', 
-                    'R$ 68.500', 
-                    'Inspirado na linha N-Line da Hyundai, conta com carregador de celular por indução, aletas atrás do volante para trocas de marcha e design moderno.', 
-                    ['Ano: 2021/2021', 'Quilometragem: 41.000 km', 'Câmbio: Automático 6 marchas', 'Motor: 1.0 TGDI Turbo (120 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80" alt="Fiat Argo Trekking" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Fiat Argo Trekking 1.3</h2>
-                    <p class="card-descricao">Aventureiro e esportivo com suspensão elevada, teto bicolor e adesivos exclusivos.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #e67e22;" title="Laranja"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 62.900</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Fiat Argo Trekking 1.3', 
-                    'R$ 62.900', 
-                    'Ideal para encarar o asfalto urbano e estradas de terra leve. Possui central Uconnect de 7 polegadas e visual encorpado.', 
-                    ['Ano: 2020/2021', 'Quilometragem: 48.000 km', 'Câmbio: Manual 5 marchas', 'Motor: 1.3 Firefly (109 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80" alt="Renault Sandero RS" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Renault Sandero R.S. 2.0</h2>
-                    <p class="card-descricao">Esportivo puro-sangue preparado pela Renault Sport. Suspensão firme e motor 2.0 aspirado.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                            <span class="bolinha-cor" style="background-color: #c0392b;" title="Vermelho"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 65.000</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Renault Sandero R.S. 2.0', 
-                    'R$ 65.000', 
-                    'Um verdadeiro esportivo de pista para as ruas. Freios a disco nas 4 rodas, exaustão esportiva de fábrica e modo RS Drive.', 
-                    ['Ano: 2019/2020', 'Quilometragem: 52.000 km', 'Câmbio: Manual 6 marchas', 'Motor: 2.0 Hi-Flex (150 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80" alt="Ford Ka FreeStyle" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Ford Ka FreeStyle 1.5</h2>
-                    <p class="card-descricao">Visual robusto tipo aventureiro, motor potente de 3 cilindros e ótima dinâmica.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza Mosaico"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                            <span class="bolinha-cor" style="background-color: #2980b9;" title="Azul"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 51.900</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Ford Ka FreeStyle 1.5', 
-                    'R$ 51.900', 
-                    'Equipado com central SYNC 3 completa, rack de teto funcional, suspensão elevada e controle de estabilidade.', 
-                    ['Ano: 2019/2020', 'Quilometragem: 58.000 km', 'Câmbio: Automático 6 marchas', 'Motor: 1.5 TiVCT (136 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Peugeot 208 GT" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Peugeot 208 GT 1.2 Turbo</h2>
-                    <p class="card-descricao">Design europeu agressivo com faróis 'dentes de sabre', teto panorâmico e i-Cockpit 3D.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #f1c40f;" title="Amarelo Faro"></span>
-                            <span class="bolinha-cor" style="background-color: #2c3e50;" title="Azul Quasar"></span>
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 89.900</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Peugeot 208 GT Turbo', 
-                    'R$ 89.900', 
-                    'Painel de instrumentos digital em 3D, volante compacto estilo F1, teto solar panorâmico e carregamento sem fio.', 
-                    ['Ano: 2023/2024', 'Quilometragem: 19.000 km', 'Câmbio: Automático CVT 7 marchas', 'Motor: 1.0 Turbo T200 (130 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80" alt="Fiat Uno Sporting" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Fiat Uno Sporting 1.3</h2>
-                    <p class="card-descricao">Escape duplo central, faixas esportivas nas laterais e ajuste de suspensão mais firme.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #e74c3c;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #f1c40f;" title="Amarelo"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 39.500</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Fiat Uno Sporting 1.3 Firefly', 
-                    'R$ 39.500', 
-                    'Versão esportivada com saída de escapamento central dupla, spoiler traseiro, interior escurecido com detalhes em vermelho.', 
-                    ['Ano: 2017/2018', 'Quilometragem: 64.000 km', 'Câmbio: Manual 5 marchas', 'Motor: 1.3 Firefly (109 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80" alt="Toyota Yaris XWay" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Toyota Yaris X-Way 1.5</h2>
-                    <p class="card-descricao">Crossover compacto com rack no teto, rodas exclusivas e acabamento refinado.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #ffffff;" title="Branco Pérola"></span>
-                            <span class="bolinha-cor" style="background-color: #7f8c8d;" title="Cinza"></span>
-                            <span class="bolinha-cor" style="background-color: #000000;" title="Preto"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 69.900</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Toyota Yaris X-Way 1.5 CVT', 
-                    'R$ 69.900', 
-                    'Confiabilidade mecânica Toyota com toque de estilo crossover: bancos em couro, chave presencial e retrovisores rebatíveis.', 
-                    ['Ano: 2020/2020', 'Quilometragem: 43.000 km', 'Câmbio: Automático CVT (7 marchas simuladas)', 'Motor: 1.5 Flex (110 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-            <div class="card-carro">
-                <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80" alt="Nissan March SL" class="card-imagem">
-                <div class="card-conteudo">
-                    <h2 class="card-titulo">Nissan March SL 1.6</h2>
-                    <p class="card-descricao">Compacto leve e muito ágil. Excelente relação peso/potência com motor 1.6 de 111 cv.</p>
-                    <div class="secao-cores">
-                        <span>Cores disponíveis:</span>
-                        <div class="lista-cores">
-                            <span class="bolinha-cor" style="background-color: #c0392b;" title="Vermelho"></span>
-                            <span class="bolinha-cor" style="background-color: #2980b9;" title="Azul"></span>
-                            <span class="bolinha-cor" style="background-color: #bdc3c7;" title="Prata"></span>
-                        </div>
-                    </div>
-                    <div class="card-preco">R$ 44.800</div>
-                </div>
-                <button class="btn-comprar" onclick="abrirModal(
-                    'Nissan March SL 1.6 16V', 
-                    'R$ 44.800', 
-                    'Fácil de manobrar e muito rápido na cidade! Conta com ar-condicionado digital, central multimídia e rodas de liga leve de 16".', 
-                    ['Ano: 2018/2019', 'Quilometragem: 50.000 km', 'Câmbio: Manual 5 marchas', 'Motor: 1.6 16V Flex (111 cv)'],
-                    [
-                        'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80'
-                    ]
-                )">Tenho Interesse</button>
-            </div>
-
-        </div>
+        <div class="grid-carros" id="gridCarros"></div>
     </div>
 
     <div class="modal-overlay" id="modalCarro">
@@ -537,7 +254,7 @@ HTML
             <h3 style="margin-top: 20px; font-size: 1.1rem; color: #3b82f6;">Galeria do Veículo:</h3>
             <div class="modal-galeria" id="modalGaleria"></div>
 
-            <button class="btn-comprar" style="margin-top: 25px;" onclick="alert('Solicitação enviada com sucesso! Um consultor entrará em contato.')">Falar com Consultor</button>
+            <button class="btn-comprar" style="margin-top: 25px;" onclick="alert('Solicitação enviada com sucesso! Entraremos em contato.')">Falar com Consultor</button>
         </div>
     </div>
 
@@ -546,44 +263,223 @@ HTML
     </footer>
 
     <script>
-        function abrirModal(titulo, preco, descricao, especificacoes, imagens) {
-            document.getElementById('modalTitulo').innerText = titulo;
-            document.getElementById('modalPreco').innerText = preco;
-            document.getElementById('modalDescricao').innerText = descricao;
+        // Dados completos dos 10 veículos
+        const listaCarros = [
+            {
+                id: 1,
+                nome: "Chevrolet Onix RS 1.0 Turbo",
+                preco: "R$ 78.900",
+                descricaoCurta: "Design esportivo exclusivo RS, aerofólio traseiro, gravata preta e motor Turbo.",
+                descricaoCompleta: "Versão esportiva com acabamento escurecido, rodas liga leve 16 polegadas em preto brilhante, bancos de couro com costuras vermelhas e excelente desempenho turbo.",
+                cores: ["#e74c3c", "#000000", "#ffffff"],
+                imagemCapal: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2022/2023", "Quilometragem: 28.000 km", "Câmbio: Automático 6 marchas", "Motor: 1.0 Turbo Flex (116 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 2,
+                nome: "Volkswagen Polo GTS 250 TSI",
+                preco: "R$ 115.000",
+                descricaoCurta: "Esportividade genuína com faróis IQ.Light, motor 1.4 TSI e seletor de condução.",
+                descricaoCompleta: "Hot hatch completo com bancos esportivos estilo concha, friso vermelho na grade dianteira, painel digital Active Info Display e motor potente.",
+                cores: ["#c0392b", "#7f8c8d", "#000000"],
+                imagemCapal: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2021/2022", "Quilometragem: 35.000 km", "Câmbio: Automático 6 marchas", "Motor: 1.4 TSI Turbo (150 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 3,
+                nome: "Hyundai HB20 Sport 1.0 Turbo",
+                preco: "R$ 68.500",
+                descricaoCurta: "Visual arrojado com saias laterais, pedaleiras em alumínio e rodas escurecidas.",
+                descricaoCompleta: "Inspirado na linha esportiva da Hyundai, conta com carregador por indução, borboletas no volante para troca de marcha e ajuste esportivo.",
+                cores: ["#2980b9", "#ffffff", "#34495e"],
+                imagemCapal: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2021/2021", "Quilometragem: 41.000 km", "Câmbio: Automático 6 marchas", "Motor: 1.0 TGDI Turbo (120 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 4,
+                nome: "Fiat Argo Trekking 1.3",
+                preco: "R$ 62.900",
+                descricaoCurta: "Aventureiro e esportivo com suspensão elevada, teto bicolor e adesivos exclusivos.",
+                descricaoCompleta: "Ideal para o asfalto urbano e estradas de terra leve. Possui central Uconnect de 7 polegadas, volante multifuncional e visual encorpado.",
+                cores: ["#e67e22", "#ffffff", "#7f8c8d"],
+                imagemCapal: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2020/2021", "Quilometragem: 48.000 km", "Câmbio: Manual 5 marchas", "Motor: 1.3 Firefly (109 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 5,
+                nome: "Renault Sandero R.S. 2.0",
+                preco: "R$ 65.000",
+                descricaoCurta: "Esportivo de verdade preparado pela Renault Sport. Suspensão firme e motor 2.0.",
+                descricaoCompleta: "Verdadeiro esportivo para as ruas. Freios a disco nas 4 rodas, escape duplo esportivo de fábrica e seletor de modo de condução RS Drive.",
+                cores: ["#000000", "#ffffff", "#c0392b"],
+                imagemCapal: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2019/2020", "Quilometragem: 52.000 km", "Câmbio: Manual 6 marchas", "Motor: 2.0 Flex (150 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 6,
+                nome: "Ford Ka FreeStyle 1.5",
+                preco: "R$ 51.900",
+                descricaoCurta: "Visual aventureiro urbano, motor forte de 136 cv e suspensão reforçada.",
+                descricaoCompleta: "Equipado com central SYNC 3, rack de teto funcional, suspensão elevada, controle de estabilidade e tração.",
+                cores: ["#7f8c8d", "#000000", "#2980b9"],
+                imagemCapal: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2019/2020", "Quilometragem: 58.000 km", "Câmbio: Automático 6 marchas", "Motor: 1.5 TiVCT (136 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 7,
+                nome: "Peugeot 208 GT 1.0 Turbo",
+                preco: "R$ 89.900",
+                descricaoCurta: "Design europeu marcante, faróis 'dentes de sabre' e painel 3D.",
+                descricaoCompleta: "Painel i-Cockpit 3D, volante compacto estilo competição, teto panorâmico e acabamento premium com costuras exclusivas GT.",
+                cores: ["#f1c40f", "#2c3e50", "#ffffff"],
+                imagemCapal: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2023/2024", "Quilometragem: 19.000 km", "Câmbio: Automático CVT 7 marchas", "Motor: 1.0 Turbo T200 (130 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 8,
+                nome: "Fiat Uno Sporting 1.3",
+                preco: "R$ 39.500",
+                descricaoCurta: "Escape duplo central, faixas esportivas nas laterais e ajuste esportivo.",
+                descricaoCompleta: "Versão esportiva com saída de escapamento central dupla, spoiler traseiro, faróis com máscara negra e interior personalizado.",
+                cores: ["#e74c3c", "#f1c40f", "#000000"],
+                imagemCapal: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2017/2018", "Quilometragem: 64.000 km", "Câmbio: Manual 5 marchas", "Motor: 1.3 Firefly (109 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 9,
+                nome: "Toyota Yaris X-Way 1.5",
+                preco: "R$ 69.900",
+                descricaoCurta: "Crossover compacto com rack de teto, rodas exclusivas e interior sofisticado.",
+                descricaoCompleta: "Mecânica extremamente confiável, bancos em couro, chave presencial com partida por botão e rebatimento elétrico dos retrovisores.",
+                cores: ["#ffffff", "#7f8c8d", "#000000"],
+                imagemCapal: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2020/2020", "Quilometragem: 43.000 km", "Câmbio: Automático CVT", "Motor: 1.5 Flex (110 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 10,
+                nome: "Nissan March SL 1.6",
+                preco: "R$ 44.800",
+                descricaoCurta: "Compacto muito leve e ágil com excelente motor 1.6 16V de 111 cv.",
+                descricaoCompleta: "Muito ágil no trânsito e fácil de estacionar. Conta com ar-condicionado digital automático, central multimídia e rodas aro 16.",
+                cores: ["#c0392b", "#2980b9", "#bdc3c7"],
+                imagemCapal: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80",
+                specs: ["Ano: 2018/2019", "Quilometragem: 50.000 km", "Câmbio: Manual 5 marchas", "Motor: 1.6 16V Flex (111 cv)"],
+                galeria: [
+                    "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80"
+                ]
+            }
+        ];
 
-            // Preenche as especificações
+        // Função para construir os cards na página
+        function renderizarCarros() {
+            const container = document.getElementById('gridCarros');
+            container.innerHTML = '';
+
+            listaCarros.forEach(carro => {
+                const coresHTML = carro.cores.map(cor => `<span class="bolinha-cor" style="background-color: ${cor};"></span>`).join('');
+
+                const cardHTML = `
+                    <div class="card-carro">
+                        <img src="${carro.imagemCapal}" alt="${carro.nome}" class="card-imagem">
+                        <div class="card-conteudo">
+                            <h2 class="card-titulo">${carro.nome}</h2>
+                            <p class="card-descricao">${carro.descricaoCurta}</p>
+                            <div class="secao-cores">
+                                <span>Cores disponíveis:</span>
+                                <div class="lista-cores">${coresHTML}</div>
+                            </div>
+                            <div class="card-preco">${carro.preco}</div>
+                        </div>
+                        <button class="btn-comprar" onclick="abrirModal(${carro.id})">Tenho Interesse</button>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Função para abrir o modal com dados do carro selecionado
+        function abrirModal(idCarro) {
+            const carro = listaCarros.find(c => c.id === idCarro);
+            if (!carro) return;
+
+            document.getElementById('modalTitulo').innerText = carro.nome;
+            document.getElementById('modalPreco').innerText = carro.preco;
+            document.getElementById('modalDescricao').innerText = carro.descricaoCompleta;
+
+            // Renderizar Especificações
             const listaSpecs = document.getElementById('modalListaEspecificacoes');
-            listaSpecs.innerHTML = '';
-            especificacoes.forEach(spec => {
-                const li = document.createElement('li');
-                li.innerText = '⚡ ' + spec;
-                listaSpecs.appendChild(li);
-            });
+            listaSpecs.innerHTML = carro.specs.map(spec => `<li>⚡ ${spec}</li>`).join('');
 
-            // Preenche a galeria de imagens
+            // Renderizar Galeria de Imagens
             const galeria = document.getElementById('modalGaleria');
-            galeria.innerHTML = '';
-            imagens.forEach(urlImg => {
-                const img = document.createElement('img');
-                img.src = urlImg;
-                galeria.appendChild(img);
-            });
+            galeria.innerHTML = carro.galeria.map(imgUrl => `<img src="${imgUrl}" alt="Foto de ${carro.nome}">`).join('');
 
-            // Exibe a janela
+            // Exibir o modal
             document.getElementById('modalCarro').classList.add('ativo');
         }
 
+        // Função para fechar o modal
         function fecharModal() {
             document.getElementById('modalCarro').classList.remove('ativo');
         }
 
-        // Fecha o modal ao clicar fora da janela
+        // Fechar ao clicar fora da caixa do modal
         window.onclick = function(event) {
             const modal = document.getElementById('modalCarro');
             if (event.target === modal) {
                 fecharModal();
             }
-        }
+        };
+
+        // Iniciar rendering dos carros ao carregar a página
+        renderizarCarros();
     </script>
 
 </body>
