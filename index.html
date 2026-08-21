@@ -1,18 +1,31 @@
 O ChatGPT disse:
-Sim. Abaixo estão todos os arquivos necessários, separados para você copiar e colar.
+Consigo. O bug principal é que o código anterior dependia de Node.js + API da OpenAI. Se você quer que funcione de verdade, precisa haver um servidor intermediário; a API oficial usa a Responses API para gerar as respostas. 
+O
+OpenAI Plataforma
 
-A estrutura será:
+Vou te passar uma versão completa e mais simples, com:
 
-meu-site/
+chat próprio dentro do site;
+campo para escrever qualquer mensagem;
+Enter envia;
+botão envia;
+resposta automática da IA;
+histórico da conversa;
+botão Falar com Consultor abre o chat já falando do carro;
+nome Concessionária Mult Marca;
+catálogo dos carros enviado para a IA;
+sem mensagem automática aparecendo antes de você escrever;
+tratamento de erro;
+chave da API protegida no servidor.
+Importante: não abra o index.html com duplo clique. Você vai iniciar o servidor e acessar pelo endereço que ele mostrar.
+
+Estrutura
+concessionaria/
+│
 ├── index.html
 ├── server.js
 ├── package.json
 └── .env
-
-O index.html mantém seu catálogo e acrescenta o chat próprio da Concessionária Mult Marca. O server.js conecta o chat à API da OpenAI. A documentação oficial atualmente mostra a Responses API com gpt-5.6, e a própria página de modelos também lista gpt-5.6-luna; portanto, usei gpt-5.6-luna no servidor. 
-O
-OpenAI Plataforma
-+1
 
 1. index.html
 <!DOCTYPE html>
@@ -24,7 +37,7 @@ OpenAI Plataforma
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AutoOfertas - Carros Esportivos e Populares</title>
+<title>AutoOfertas - Concessionária Mult Marca</title>
 
 <style>
 
@@ -46,7 +59,7 @@ header {
     padding: 25px 0;
     text-align: center;
     border-bottom: 3px solid #3b82f6;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,.3);
 }
 
 header h1 {
@@ -68,7 +81,7 @@ header p {
 
 .grid-carros {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
     gap: 25px;
 }
 
@@ -76,17 +89,16 @@ header p {
     background-color: #1e293b;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    transition: .2s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border: 1px solid #334155;
 }
 
 .card-carro:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 8px 24px rgba(59,130,246,.25);
     border-color: #3b82f6;
 }
 
@@ -109,7 +121,7 @@ header p {
 }
 
 .card-descricao {
-    font-size: 0.9rem;
+    font-size: .9rem;
     color: #94a3b8;
     margin-bottom: 15px;
     line-height: 1.4;
@@ -120,7 +132,7 @@ header p {
 }
 
 .secao-cores span {
-    font-size: 0.85rem;
+    font-size: .85rem;
     font-weight: bold;
     color: #cbd5e1;
     display: block;
@@ -152,12 +164,12 @@ header p {
     width: 100%;
     padding: 12px;
     background-color: #2563eb;
-    color: #fff;
+    color: white;
     text-align: center;
     font-weight: bold;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: .2s;
 }
 
 .btn-comprar:hover {
@@ -168,17 +180,14 @@ header p {
 
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    inset: 0;
+    background-color: rgba(0,0,0,.85);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: .3s;
     z-index: 1000;
 }
 
@@ -197,7 +206,7 @@ header p {
     max-height: 85vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 25px rgba(0,0,0,.5);
     border: 1px solid #334155;
 }
 
@@ -213,12 +222,12 @@ header p {
 }
 
 .btn-fechar:hover {
-    color: #fff;
+    color: white;
 }
 
 .modal-galeria {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fit,minmax(130px,1fr));
     gap: 10px;
     margin: 15px 0;
 }
@@ -239,13 +248,13 @@ header p {
 .modal-detalhes-lista li {
     padding: 8px 0;
     border-bottom: 1px solid #334155;
-    font-size: 0.95rem;
+    font-size: .95rem;
     color: #cbd5e1;
 }
 
 /* =====================================================
-   CHAT DA CONCESSIONÁRIA MULT MARCA
-   ===================================================== */
+   CHAT
+===================================================== */
 
 .botao-chat {
     position: fixed;
@@ -259,9 +268,8 @@ header p {
     border: none;
     cursor: pointer;
     font-size: 30px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 20px rgba(0,0,0,.4);
     z-index: 2000;
-    transition: 0.2s;
 }
 
 .botao-chat:hover {
@@ -273,14 +281,14 @@ header p {
     position: fixed;
     right: 25px;
     bottom: 100px;
-    width: 370px;
+    width: 380px;
     max-width: calc(100vw - 30px);
-    height: 570px;
+    height: 580px;
     max-height: calc(100vh - 130px);
     background: #0f172a;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 40px rgba(0,0,0,.5);
     border: 1px solid #334155;
     display: none;
     flex-direction: column;
@@ -309,7 +317,6 @@ header p {
     align-items: center;
     justify-content: center;
     font-size: 21px;
-    font-weight: bold;
 }
 
 .info-chat {
@@ -319,20 +326,19 @@ header p {
 .nome-chat {
     font-weight: bold;
     color: white;
-    font-size: 15px;
 }
 
 .status-chat {
     font-size: 12px;
     color: #dbeafe;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .fechar-chat {
     background: transparent;
     border: none;
     color: white;
-    font-size: 25px;
+    font-size: 27px;
     cursor: pointer;
 }
 
@@ -343,7 +349,6 @@ header p {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: #0f172a;
 }
 
 .mensagem {
@@ -352,13 +357,13 @@ header p {
     border-radius: 12px;
     font-size: 14px;
     line-height: 1.4;
-    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .mensagem.bot {
     align-self: flex-start;
     background: #1e293b;
-    color: #f8fafc;
+    color: white;
     border-bottom-left-radius: 3px;
 }
 
@@ -372,14 +377,14 @@ header p {
 .hora-mensagem {
     display: block;
     font-size: 10px;
-    opacity: 0.6;
+    opacity: .6;
     margin-top: 4px;
     text-align: right;
 }
 
 .digitando {
-    font-style: italic;
     color: #94a3b8;
+    font-style: italic;
 }
 
 .area-digitacao {
@@ -401,6 +406,10 @@ header p {
     font-size: 14px;
 }
 
+.input-chat:disabled {
+    opacity: .6;
+}
+
 .input-chat::placeholder {
     color: #94a3b8;
 }
@@ -416,8 +425,8 @@ header p {
     font-size: 18px;
 }
 
-.btn-enviar-chat:hover {
-    background: #1d4ed8;
+.btn-enviar-chat:disabled {
+    opacity: .5;
 }
 
 footer {
@@ -429,7 +438,7 @@ footer {
     border-top: 1px solid #334155;
 }
 
-@media (max-width: 500px) {
+@media(max-width:500px) {
 
     .janela-chat {
         right: 10px;
@@ -459,159 +468,171 @@ footer {
 
 </header>
 
+
 <div class="container">
 
 <div class="grid-carros" id="gridCarros"></div>
 
 </div>
 
-<!-- MODAL DOS CARROS -->
+
+<!-- MODAL -->
 
 <div class="modal-overlay" id="modalCarro">
 
 <div class="modal-conteudo">
 
-<button class="btn-fechar" onclick="fecharModal()">&times;</button>
+<button class="btn-fechar" onclick="fecharModal()">
+&times;
+</button>
 
 <h2 id="modalTitulo" class="card-titulo"></h2>
 
 <div id="modalPreco" class="card-preco"></div>
 
-<p id="modalDescricao" style="margin-top: 10px; color: #cbd5e1;"></p>
+<p id="modalDescricao"
+style="margin-top:10px;color:#cbd5e1;">
+</p>
 
-<h3 style="margin-top: 20px; font-size: 1.1rem; color: #3b82f6;">
+<h3 style="margin-top:20px;color:#3b82f6;">
 Especificações Técnicas:
 </h3>
 
-<ul class="modal-detalhes-lista" id="modalListaEspecificacoes"></ul>
+<ul
+class="modal-detalhes-lista"
+id="modalListaEspecificacoes">
+</ul>
 
-<h3 style="margin-top: 20px; font-size: 1.1rem; color: #3b82f6;">
+<h3 style="margin-top:20px;color:#3b82f6;">
 Galeria do Veículo:
 </h3>
 
-<div class="modal-galeria" id="modalGaleria"></div>
+<div
+class="modal-galeria"
+id="modalGaleria">
+</div>
 
 <button
-    class="btn-comprar"
-    style="margin-top: 25px;"
-    onclick="abrirChatDoCarro()"
+class="btn-comprar"
+style="margin-top:25px;"
+onclick="abrirChatDoCarro()"
 >
-    Falar com Consultor
+Falar com Consultor
 </button>
 
 </div>
 
 </div>
 
-<!-- =====================================================
-     CHAT PRÓPRIO DO SITE
-     ===================================================== -->
+
+<!-- CHAT -->
 
 <button
-    class="botao-chat"
-    onclick="abrirChat()"
-    title="Concessionária Mult Marca"
+class="botao-chat"
+onclick="abrirChat()"
+title="Concessionária Mult Marca"
 >
-    💬
+💬
 </button>
 
-<div class="janela-chat" id="janelaChat">
+
+<div
+class="janela-chat"
+id="janelaChat"
+>
 
 <div class="cabecalho-chat">
 
 <div class="avatar-chat">
-    🚗
+🚗
 </div>
 
 <div class="info-chat">
 
 <div class="nome-chat">
-    Concessionária Mult Marca
+Concessionária Mult Marca
 </div>
 
 <div class="status-chat">
-    ● Assistente online
+● Assistente online
 </div>
 
 </div>
 
-<button class="fechar-chat" onclick="fecharChat()">
-    &times;
+<button
+class="fechar-chat"
+onclick="fecharChat()"
+>
+&times;
 </button>
 
 </div>
 
-<div class="mensagens-chat" id="mensagensChat">
 
-<div class="mensagem bot">
+<!-- COMEÇA VAZIO -->
 
-Olá! 👋<br><br>
-
-Sou o assistente virtual da
-<strong>Concessionária Mult Marca</strong>.
-
-<br><br>
-
-Posso ajudar você a encontrar um carro,
-consultar preços, especificações,
-quilometragem e outras informações.
-
-<span class="hora-mensagem">agora</span>
-
+<div
+class="mensagens-chat"
+id="mensagensChat"
+>
 </div>
 
-</div>
 
 <div class="area-digitacao">
 
 <input
-    type="text"
-    id="inputChat"
-    class="input-chat"
-    placeholder="Digite sua mensagem..."
-    autocomplete="off"
+type="text"
+id="inputChat"
+class="input-chat"
+placeholder="Digite sua mensagem..."
+autocomplete="off"
 >
 
 <button
-    class="btn-enviar-chat"
-    onclick="enviarMensagemChat()"
+class="btn-enviar-chat"
+id="btnEnviarChat"
+onclick="enviarMensagemChat()"
 >
-    ➤
+➤
 </button>
 
 </div>
 
 </div>
 
+
 <footer>
 
-<p>&copy; 2026 AutoOfertas - Todos os direitos reservados.</p>
+<p>
+&copy; 2026 AutoOfertas - Todos os direitos reservados.
+</p>
 
 </footer>
+
 
 <script>
 
 /* =====================================================
-   CARROS
-   ===================================================== */
+   CATÁLOGO
+===================================================== */
 
 const listaCarros = [
 
 {
-id: 1,
-nome: "Chevrolet Camaro v8",
-preco: "R$ 220.900",
-descricaoCurta: "Design esportivo exclusivo RS, aerofólio traseiro, gravata preta e motor Turbo.",
-descricaoCompleta: "Versão esportiva com acabamento escurecido, rodas liga leve 16 polegadas em preto brilhante, bancos de couro com costuras vermelhas e excelente desempenho turbo.",
-cores: ["#e74c3c", "#000000", "#ffffff"],
-imagemCapal: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:1,
+nome:"Chevrolet Camaro 2.2",
+preco:"R$ 220.900",
+descricaoCurta:"Design esportivo exclusivo RS, aerofólio traseiro, gravata preta e motor Turbo.",
+descricaoCompleta:"Versão esportiva com acabamento escurecido, rodas liga leve 16 polegadas em preto brilhante, bancos de couro com costuras vermelhas e excelente desempenho turbo.",
+cores:["#e74c3c","#000000","#ffffff"],
+imagemCapal:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2022/2023",
 "Quilometragem: 28.000 km",
 "Câmbio: Automático 6 marchas",
 "Motor: 1.0 Turbo Flex (116 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
@@ -619,20 +640,20 @@ galeria: [
 },
 
 {
-id: 2,
-nome: "Volkswagen Polo GTS 250 TSI",
-preco: "R$ 115.000",
-descricaoCurta: "Esportividade genuína com faróis IQ.Light, motor 1.4 TSI e seletor de condução.",
-descricaoCompleta: "Hot hatch completo com bancos esportivos estilo concha, friso vermelho na grade dianteira, painel digital Active Info Display e motor potente.",
-cores: ["#c0392b", "#7f8c8d", "#000000"],
-imagemCapal: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:2,
+nome:"Volkswagen Polo GTS 250 TSI",
+preco:"R$ 115.000",
+descricaoCurta:"Esportividade genuína com faróis IQ.Light, motor 1.4 TSI e seletor de condução.",
+descricaoCompleta:"Hot hatch completo com bancos esportivos, friso vermelho na grade dianteira, painel digital e motor potente.",
+cores:["#c0392b","#7f8c8d","#000000"],
+imagemCapal:"https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2021/2022",
 "Quilometragem: 35.000 km",
 "Câmbio: Automático 6 marchas",
 "Motor: 1.4 TSI Turbo (150 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80"
@@ -640,20 +661,20 @@ galeria: [
 },
 
 {
-id: 3,
-nome: "Ferrari 488 Turbo",
-preco: "R$ 3,5 milhões",
-descricaoCurta: "Visual arrojado com saias laterais, pedaleiras em alumínio e rodas escurecidas.",
-descricaoCompleta: "Inspirado na linha esportiva, conta com carregador por indução, borboletas no volante para troca de marcha e ajuste esportivo.",
-cores: ["#2980b9", "#ffffff", "#34495e"],
-imagemCapal: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:3,
+nome:"Ferrari 488 Turbo",
+preco:"R$ 3,5 milhões",
+descricaoCurta:"Visual arrojado com saias laterais, pedaleiras em alumínio e rodas escurecidas.",
+descricaoCompleta:"Modelo esportivo com carregador por indução, borboletas no volante para troca de marcha e ajuste esportivo.",
+cores:["#2980b9","#ffffff","#34495e"],
+imagemCapal:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2021/2021",
 "Quilometragem: 41.000 km",
 "Câmbio: Automático 6 marchas",
 "Motor: 1.0 TGDI Turbo (120 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80"
@@ -661,20 +682,20 @@ galeria: [
 },
 
 {
-id: 4,
-nome: "ford ecsplore  1.6",
-preco: "R$ 62.900",
-descricaoCurta: "Aventureiro e esportivo com suspensão elevada, teto bicolor e adesivos exclusivos.",
-descricaoCompleta: "Ideal para o asfalto urbano e estradas de terra leve. Possui central Uconnect de 7 polegadas, volante multifuncional e visual encorpado.",
-cores: ["#e67e22", "#ffffff", "#7f8c8d"],
-imagemCapal: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:4,
+nome:"HRV 1.6",
+preco:"R$ 62.900",
+descricaoCurta:"Aventureiro e esportivo com suspensão elevada, teto bicolor e adesivos exclusivos.",
+descricaoCompleta:"Ideal para o asfalto urbano e estradas de terra leve. Possui central multimídia, volante multifuncional e visual encorpado.",
+cores:["#e67e22","#ffffff","#7f8c8d"],
+imagemCapal:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2020/2021",
 "Quilometragem: 48.000 km",
 "Câmbio: Manual 5 marchas",
 "Motor: 1.3 Firefly (109 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80"
@@ -682,20 +703,20 @@ galeria: [
 },
 
 {
-id: 5,
-nome: "BMW 320 R.S. 2.0",
-preco: "R$ 80.000",
-descricaoCurta: "Esportivo de verdade preparado pela Renault Sport. Suspensão firme e motor 2.0.",
-descricaoCompleta: "Verdadeiro esportivo para as ruas. Freios a disco nas 4 rodas, escape duplo esportivo de fábrica e seletor de modo de condução RS Drive.",
-cores: ["#000000", "#ffffff", "#c0392b"],
-imagemCapal: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:5,
+nome:"BMW 320 R.S. 2.0",
+preco:"R$ 80.000",
+descricaoCurta:"Esportivo de verdade preparado pela Renault Sport. Suspensão firme e motor 2.0.",
+descricaoCompleta:"Verdadeiro esportivo para as ruas. Freios a disco nas 4 rodas, escape duplo esportivo e seletor de modo de condução.",
+cores:["#000000","#ffffff","#c0392b"],
+imagemCapal:"https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2019/2020",
 "Quilometragem: 52.000 km",
 "Câmbio: Manual 6 marchas",
 "Motor: 2.0 Flex (150 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80"
@@ -703,20 +724,20 @@ galeria: [
 },
 
 {
-id: 6,
-nome: "Lamborghini Aventador 4.0",
-preco: "R$ 4.000.000",
-descricaoCurta: "Visual aventureiro urbano, motor forte de 136 cv e suspensão reforçada.",
-descricaoCompleta: "Equipado com central SYNC 3, rack de teto funcional, suspensão elevada, controle de estabilidade e tração.",
-cores: ["#7f8c8d", "#000000", "#2980b9"],
-imagemCapal: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:6,
+nome:"Lamborghini Aventador 4.0",
+preco:"R$ 4.000.000",
+descricaoCurta:"Visual aventureiro urbano, motor forte e suspensão reforçada.",
+descricaoCompleta:"Equipado com central multimídia, suspensão elevada, controle de estabilidade e tração.",
+cores:["#7f8c8d","#000000","#2980b9"],
+imagemCapal:"https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2019/2020",
 "Quilometragem: 58.000 km",
 "Câmbio: Automático 6 marchas",
 "Motor: 1.5 TiVCT (136 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80"
@@ -724,20 +745,20 @@ galeria: [
 },
 
 {
-id: 7,
-nome: "Porsche 911 Turbo",
-preco: "R$ 1.000.000",
-descricaoCurta: "Design europeu marcante, faróis 'dentes de sabre' e painel 3D.",
-descricaoCompleta: "Painel i-Cockpit 3D, volante compacto estilo competição, teto panorâmico e acabamento premium com costuras exclusivas GT.",
-cores: ["#f1c40f", "#2c3e50", "#ffffff"],
-imagemCapal: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:7,
+nome:"Porsche 911 Turbo",
+preco:"R$ 1.000.000",
+descricaoCurta:"Design europeu marcante, faróis esportivos e painel 3D.",
+descricaoCompleta:"Painel digital, volante esportivo, teto panorâmico e acabamento premium.",
+cores:["#f1c40f","#2c3e50","#ffffff"],
+imagemCapal:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2023/2024",
 "Quilometragem: 19.000 km",
-"Câmbio: Automático CVT 7 marchas",
-"Motor: 1.0 Turbo T200 (130 cv)"
+"Câmbio: Automático 7 marchas",
+"Motor: Turbo (130 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
@@ -745,20 +766,20 @@ galeria: [
 },
 
 {
-id: 8,
-nome: "Ford Mustang Turbo",
-preco: "R$ 450.500",
-descricaoCurta: "Escape duplo central, faixas esportivas nas laterais e ajuste esportivo.",
-descricaoCompleta: "Versão esportiva com saída de escapamento central dupla, spoiler traseiro, faróis com máscara negra e interior personalizado.",
-cores: ["#e74c3c", "#f1c40f", "#000000"],
-imagemCapal: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:8,
+nome:"Ford Mustang Turbo",
+preco:"R$ 450.500",
+descricaoCurta:"Escape duplo central, faixas esportivas nas laterais e ajuste esportivo.",
+descricaoCompleta:"Versão esportiva com spoiler traseiro, faróis com máscara negra e interior personalizado.",
+cores:["#e74c3c","#f1c40f","#000000"],
+imagemCapal:"https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2017/2018",
 "Quilometragem: 64.000 km",
 "Câmbio: Manual 5 marchas",
 "Motor: 1.3 Firefly (109 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80"
@@ -766,20 +787,20 @@ galeria: [
 },
 
 {
-id: 9,
-nome: "BMW 630 I",
-preco: "R$ 400.000",
-descricaoCurta: "Crossover compacto com rack de teto, rodas exclusivas e interior sofisticado.",
-descricaoCompleta: "Mecânica extremamente confiável, bancos em couro, chave presencial com partida por botão e rebatimento elétrico dos retrovisores.",
-cores: ["#ffffff", "#7f8c8d", "#000000"],
-imagemCapal: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:9,
+nome:"BMW 630 I",
+preco:"R$ 400.000",
+descricaoCurta:"Crossover compacto com rodas exclusivas e interior sofisticado.",
+descricaoCompleta:"Bancos em couro, chave presencial, partida por botão e rebatimento elétrico dos retrovisores.",
+cores:["#ffffff","#7f8c8d","#000000"],
+imagemCapal:"https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2020/2020",
 "Quilometragem: 43.000 km",
 "Câmbio: Automático CVT",
 "Motor: 1.5 Flex (110 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80"
@@ -787,20 +808,20 @@ galeria: [
 },
 
 {
-id: 10,
-nome: "Audi RS5 Sportback 2.9 Quattro 2021 - Único dono",
-preco: "R$ 529.800",
-descricaoCurta: "Compacto muito leve e ágil com excelente motor 1.6 16V de 111 cv.",
-descricaoCompleta: "Muito ágil no trânsito e fácil de estacionar. Conta com ar-condicionado digital automático, central multimídia e rodas aro 16.",
-cores: ["#c0392b", "#2980b9", "#bdc3c7"],
-imagemCapal: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80",
-specs: [
+id:10,
+nome:"Audi RS5 Sportback 2.9 Quattro 2021 - Único dono",
+preco:"R$ 529.800",
+descricaoCurta:"Compacto muito leve e ágil com excelente motor.",
+descricaoCompleta:"Muito ágil no trânsito e fácil de estacionar. Conta com ar-condicionado digital, central multimídia e rodas aro 16.",
+cores:["#c0392b","#2980b9","#bdc3c7"],
+imagemCapal:"https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80",
+specs:[
 "Ano: 2018/2019",
 "Quilometragem: 50.000 km",
 "Câmbio: Manual 5 marchas",
 "Motor: 1.6 16V Flex (111 cv)"
 ],
-galeria: [
+galeria:[
 "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
 "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80"
@@ -811,74 +832,79 @@ galeria: [
 
 
 /* =====================================================
-   CARDS
-   ===================================================== */
+   CARREGAR CARROS
+===================================================== */
 
 function renderizarCarros() {
 
     const container =
-        document.getElementById('gridCarros');
+        document.getElementById("gridCarros");
 
-    container.innerHTML = '';
+    container.innerHTML = "";
 
     listaCarros.forEach(carro => {
 
-        const coresHTML = carro.cores
-            .map(cor =>
-                `<span class="bolinha-cor"
-                style="background-color:${cor};"></span>`
-            )
-            .join('');
+        const cores =
+            carro.cores.map(cor => {
 
-        const cardHTML = `
-
-        <div class="card-carro">
-
-            <img
-                src="${carro.imagemCapal}"
-                alt="${carro.nome}"
-                class="card-imagem"
-            >
-
-            <div class="card-conteudo">
-
-                <h2 class="card-titulo">
-                    ${carro.nome}
-                </h2>
-
-                <p class="card-descricao">
-                    ${carro.descricaoCurta}
-                </p>
-
-                <div class="secao-cores">
-
-                    <span>
-                        Cores disponíveis:
+                return `
+                    <span
+                        class="bolinha-cor"
+                        style="background:${cor}">
                     </span>
+                `;
 
-                    <div class="lista-cores">
-                        ${coresHTML}
+            }).join("");
+
+
+        container.innerHTML += `
+
+            <div class="card-carro">
+
+                <img
+                    src="${carro.imagemCapal}"
+                    alt="${carro.nome}"
+                    class="card-imagem"
+                >
+
+                <div class="card-conteudo">
+
+                    <h2 class="card-titulo">
+                        ${carro.nome}
+                    </h2>
+
+                    <p class="card-descricao">
+                        ${carro.descricaoCurta}
+                    </p>
+
+                    <div class="secao-cores">
+
+                        <span>
+                            Cores disponíveis:
+                        </span>
+
+                        <div class="lista-cores">
+                            ${cores}
+                        </div>
+
+                    </div>
+
+                    <div class="card-preco">
+                        ${carro.preco}
                     </div>
 
                 </div>
 
-                <div class="card-preco">
-                    ${carro.preco}
-                </div>
+                <button
+                    class="btn-comprar"
+                    onclick="abrirModal(${carro.id})"
+                >
+                    Tenho Interesse
+                </button>
 
             </div>
 
-            <button
-                class="btn-comprar"
-                onclick="abrirModal(${carro.id})"
-            >
-                Tenho Interesse
-            </button>
-
-        </div>
         `;
-
-        container.innerHTML += cardHTML;
 
     });
 
@@ -887,109 +913,386 @@ function renderizarCarros() {
 
 /* =====================================================
    MODAL
-   ===================================================== */
+===================================================== */
 
 let carroAtual = null;
 
-function abrirModal(idCarro) {
 
-    const carro =
-        listaCarros.find(c => c.id === idCarro);
+function abrirModal(id) {
 
-    if (!carro) return;
-
-    carroAtual = carro;
-
-    document.getElementById('modalTitulo')
-        .innerText = carro.nome;
-
-    document.getElementById('modalPreco')
-        .innerText = carro.preco;
-
-    document.getElementById('modalDescricao')
-        .innerText = carro.descricaoCompleta;
-
-    const listaSpecs =
-        document.getElementById(
-            'modalListaEspecificacoes'
+    carroAtual =
+        listaCarros.find(carro =>
+            carro.id === id
         );
 
-    listaSpecs.innerHTML =
-        carro.specs
-            .map(spec => `<li>⚡ ${spec}</li>`)
-            .join('');
+    if (!carroAtual) {
+        return;
+    }
 
-    const galeria =
-        document.getElementById('modalGaleria');
 
-    galeria.innerHTML =
-        carro.galeria
-            .map(imgUrl =>
-                `<img
-                    src="${imgUrl}"
-                    alt="Foto de ${carro.nome}"
-                >`
+    document.getElementById("modalTitulo")
+        .innerText =
+        carroAtual.nome;
+
+
+    document.getElementById("modalPreco")
+        .innerText =
+        carroAtual.preco;
+
+
+    document.getElementById("modalDescricao")
+        .innerText =
+        carroAtual.descricaoCompleta;
+
+
+    document.getElementById(
+        "modalListaEspecificacoes"
+    ).innerHTML =
+
+        carroAtual.specs
+            .map(spec =>
+                `<li>⚡ ${spec}</li>`
             )
-            .join('');
+            .join("");
 
-    document
-        .getElementById('modalCarro')
-        .classList.add('ativo');
+
+    document.getElementById(
+        "modalGaleria"
+    ).innerHTML =
+
+        carroAtual.galeria
+            .map(img =>
+                `<img src="${img}" alt="${carroAtual.nome}">`
+            )
+            .join("");
+
+
+    document.getElementById("modalCarro")
+        .classList.add("ativo");
 
 }
 
 
 function fecharModal() {
 
-    document
-        .getElementById('modalCarro')
-        .classList.remove('ativo');
+    document.getElementById("modalCarro")
+        .classList.remove("ativo");
 
 }
 
 
-window.onclick = function(event) {
-
-    const modal =
-        document.getElementById('modalCarro');
-
-    if (event.target === modal) {
-
-        fecharModal();
-
-    }
-
-};
-
-
 /* =====================================================
    CHAT
-   ===================================================== */
+===================================================== */
 
 let historicoChat = [];
+
+let enviando = false;
 
 
 function abrirChat() {
 
-    document
-        .getElementById('janelaChat')
-        .classList.add('aberta');
+    document.getElementById("janelaChat")
+        .classList.add("aberta");
 
-    document
-        .getElementById('inputChat')
-        .focus();
+    setTimeout(() => {
+
+        document.getElementById("inputChat")
+            .focus();
+
+    },100);
 
 }
 
 
 function fecharChat() {
 
-    document
-        .getElementById('janelaChat')
-        .classList.remove('aberta');
+    document.getElementById("janelaChat")
+        .classList.remove("aberta");
 
 }
 
+
+/* ESCREVER MENSAGEM NA TELA */
+
+function adicionarMensagem(texto,tipo) {
+
+    const area =
+        document.getElementById("mensagensChat");
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.className =
+        "mensagem " + tipo;
+
+
+    const hora =
+        new Date().toLocaleTimeString(
+            "pt-BR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    div.innerHTML = `
+
+        ${texto
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/\n/g,"<br>")
+        }
+
+        <span class="hora-mensagem">
+            ${hora}
+        </span>
+
+    `;
+
+
+    area.appendChild(div);
+
+
+    area.scrollTop =
+        area.scrollHeight;
+
+}
+
+
+/* DIGITANDO */
+
+function mostrarDigitando() {
+
+    const area =
+        document.getElementById("mensagensChat");
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.id =
+        "digitando";
+
+
+    div.className =
+        "mensagem bot digitando";
+
+
+    div.innerText =
+        "Digitando...";
+
+
+    area.appendChild(div);
+
+
+    area.scrollTop =
+        area.scrollHeight;
+
+}
+
+
+function esconderDigitando() {
+
+    const div =
+        document.getElementById("digitando");
+
+    if(div) {
+        div.remove();
+    }
+
+}
+
+
+/* =====================================================
+   ENVIAR MENSAGEM
+===================================================== */
+
+async function enviarMensagemChat() {
+
+    if(enviando) {
+        return;
+    }
+
+
+    const input =
+        document.getElementById("inputChat");
+
+
+    const botao =
+        document.getElementById("btnEnviarChat");
+
+
+    const texto =
+        input.value.trim();
+
+
+    if(!texto) {
+        return;
+    }
+
+
+    /* MOSTRA CLIENTE */
+
+    adicionarMensagem(
+        texto,
+        "usuario"
+    );
+
+
+    /* LIMPA */
+
+    input.value = "";
+
+
+    /* HISTÓRICO */
+
+    historicoChat.push({
+
+        role:"user",
+
+        content:texto
+
+    });
+
+
+    /* BLOQUEIA */
+
+    enviando = true;
+
+    input.disabled = true;
+
+    botao.disabled = true;
+
+
+    mostrarDigitando();
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                "/api/chat",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        mensagem:texto,
+
+                        historico:
+                            historicoChat,
+
+                        carros:
+                            listaCarros
+
+                    })
+
+                }
+            );
+
+
+        const dados =
+            await resposta.json();
+
+
+        if(!resposta.ok) {
+
+            throw new Error(
+                dados.erro ||
+                "Erro no servidor"
+            );
+
+        }
+
+
+        esconderDigitando();
+
+
+        const respostaIA =
+            dados.resposta ||
+            "Não consegui responder agora.";
+
+
+        adicionarMensagem(
+            respostaIA,
+            "bot"
+        );
+
+
+        historicoChat.push({
+
+            role:"assistant",
+
+            content:respostaIA
+
+        });
+
+    }
+
+    catch(erro) {
+
+        console.error(
+            "ERRO DO CHAT:",
+            erro
+        );
+
+
+        esconderDigitando();
+
+
+        adicionarMensagem(
+            "Não consegui conectar com o assistente. Verifique se o servidor está funcionando.",
+            "bot"
+        );
+
+    }
+
+
+    enviando = false;
+
+    input.disabled = false;
+
+    botao.disabled = false;
+
+    input.focus();
+
+}
+
+
+/* ENTER */
+
+document.getElementById("inputChat")
+.addEventListener(
+    "keydown",
+    function(event) {
+
+        if(event.key === "Enter") {
+
+            event.preventDefault();
+
+            enviarMensagemChat();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FALAR COM CONSULTOR
+===================================================== */
 
 function abrirChatDoCarro() {
 
@@ -997,390 +1300,459 @@ function abrirChatDoCarro() {
 
     abrirChat();
 
-    if (carroAtual) {
 
-        const mensagem =
-            `Olá! Tenho interesse no ${carroAtual.nome}, anunciado por ${carroAtual.preco}. Gostaria de saber mais informações.`;
-
-        adicionarMensagem(
-            mensagem,
-            'usuario'
-        );
-
-        historicoChat.push({
-            role: 'user',
-            content: mensagem
-        });
-
-        responderAutomaticamente();
-
+    if(!carroAtual) {
+        return;
     }
 
-}
+
+    const texto =
+
+        `Olá! Tenho interesse no ${carroAtual.nome}. O preço anunciado é ${carroAtual.preco}. Gostaria de saber mais informações.`;
 
 
-function adicionarMensagem(texto, tipo) {
+    adicionarMensagem(
+        texto,
+        "usuario"
+    );
 
-    const mensagens =
-        document.getElementById('mensagensChat');
 
-    const mensagem =
-        document.createElement('div');
+    historicoChat.push({
 
-    mensagem.className =
-        `mensagem ${tipo}`;
+        role:"user",
 
-    mensagem.innerHTML = `
-        ${texto}
-        <span class="hora-mensagem">
-            ${new Date().toLocaleTimeString(
-                'pt-BR',
-                {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }
-            )}
-        </span>
-    `;
+        content:texto
 
-    mensagens.appendChild(mensagem);
+    });
 
-    mensagens.scrollTop =
-        mensagens.scrollHeight;
+
+    responderMensagemDoCarro();
 
 }
 
 
-function mostrarDigitando() {
+async function responderMensagemDoCarro() {
 
-    const mensagens =
-        document.getElementById('mensagensChat');
-
-    const digitando =
-        document.createElement('div');
-
-    digitando.id =
-        'mensagemDigitando';
-
-    digitando.className =
-        'mensagem bot digitando';
-
-    digitando.innerHTML =
-        'Digitando...';
-
-    mensagens.appendChild(digitando);
-
-    mensagens.scrollTop =
-        mensagens.scrollHeight;
-
-}
-
-
-function removerDigitando() {
-
-    const digitando =
-        document.getElementById(
-            'mensagemDigitando'
-        );
-
-    if (digitando) {
-
-        digitando.remove();
-
+    if(enviando) {
+        return;
     }
 
-}
+
+    enviando = true;
 
 
-async function responderAutomaticamente() {
+    const input =
+        document.getElementById("inputChat");
 
-    const ultimaMensagem =
-        historicoChat[
-            historicoChat.length - 1
-        ];
+    const botao =
+        document.getElementById("btnEnviarChat");
 
-    if (!ultimaMensagem) return;
+
+    input.disabled = true;
+
+    botao.disabled = true;
+
 
     mostrarDigitando();
+
 
     try {
 
         const resposta =
-            await fetch('/api/chat', {
+            await fetch(
+                "/api/chat",
+                {
 
-                method: 'POST',
+                    method:"POST",
 
-                headers: {
-                    'Content-Type':
-                        'application/json'
-                },
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body: JSON.stringify({
+                    body:JSON.stringify({
 
-                    mensagem:
-                        ultimaMensagem.content,
+                        mensagem:
+                            historicoChat[
+                                historicoChat.length-1
+                            ].content,
 
-                    historico:
-                        historicoChat,
+                        historico:
+                            historicoChat,
 
-                    carros:
-                        listaCarros
+                        carros:
+                            listaCarros
 
-                })
+                    })
 
-            });
-
-        if (!resposta.ok) {
-
-            throw new Error(
-                'Erro no servidor'
+                }
             );
 
-        }
 
         const dados =
             await resposta.json();
 
-        removerDigitando();
+
+        if(!resposta.ok) {
+            throw new Error(
+                dados.erro ||
+                "Erro no servidor"
+            );
+        }
+
+
+        esconderDigitando();
+
 
         const texto =
             dados.resposta ||
-            'Desculpe, não consegui responder agora.';
+            "Vou verificar essa informação para você.";
+
 
         adicionarMensagem(
             texto,
-            'bot'
+            "bot"
         );
+
 
         historicoChat.push({
 
-            role: 'assistant',
+            role:"assistant",
 
-            content: texto
+            content:texto
 
         });
 
     }
 
-    catch (erro) {
+    catch(erro) {
 
         console.error(erro);
 
-        removerDigitando();
+        esconderDigitando();
 
         adicionarMensagem(
-            'Desculpe, estou com dificuldade para responder agora. Tente novamente em alguns instantes.',
-            'bot'
+            "Não consegui conectar ao assistente agora.",
+            "bot"
         );
 
     }
 
-}
 
+    enviando = false;
 
-async function enviarMensagemChat() {
+    input.disabled = false;
 
-    const input =
-        document.getElementById('inputChat');
+    botao.disabled = false;
 
-    const mensagem =
-        input.value.trim();
-
-    if (!mensagem) return;
-
-    input.value = '';
-
-    adicionarMensagem(
-        mensagem,
-        'usuario'
-    );
-
-    historicoChat.push({
-
-        role: 'user',
-
-        content: mensagem
-
-    });
-
-    await responderAutomaticamente();
+    input.focus();
 
 }
 
 
-document
-    .getElementById('inputChat')
-    .addEventListener(
-        'keydown',
-        function(event) {
+/* =====================================================
+   FECHAR MODAL CLICANDO FORA
+===================================================== */
 
-            if (event.key === 'Enter') {
+document.getElementById("modalCarro")
+.addEventListener(
+    "click",
+    function(event) {
 
-                event.preventDefault();
+        if(event.target === this) {
 
-                enviarMensagemChat();
-
-            }
+            fecharModal();
 
         }
-    );
+
+    }
+);
 
 
 /* =====================================================
    INICIAR
-   ===================================================== */
+===================================================== */
 
 renderizarCarros();
 
 </script>
 
 </body>
+
 </html>
 
 2. server.js
 const express = require("express");
 const OpenAI = require("openai");
-const path = require("path");
 
 const app = express();
 
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
+
+
+/* =====================================================
+   CONFIGURAÇÃO
+===================================================== */
+
+app.use(express.json({ limit: "1mb" }));
 
 app.use(express.static(__dirname));
 
 
-const openai = new OpenAI({
+const client = new OpenAI({
+
     apiKey: process.env.OPENAI_API_KEY
+
 });
 
+
+/* =====================================================
+   ROTA DO CHAT
+===================================================== */
 
 app.post("/api/chat", async (req, res) => {
 
     try {
 
-        const mensagem = req.body.mensagem || "";
+        const mensagem =
+            req.body.mensagem || "";
 
-        const historico = req.body.historico || [];
+        const historico =
+            Array.isArray(req.body.historico)
+                ? req.body.historico
+                : [];
 
-        const carros = req.body.carros || [];
+        const carros =
+            Array.isArray(req.body.carros)
+                ? req.body.carros
+                : [];
 
 
-        const catalogo = carros.map(carro => {
+        if (!mensagem.trim()) {
 
-            return `
-VEÍCULO:
-${carro.nome}
+            return res.status(400).json({
 
-PREÇO:
-${carro.preco}
+                erro:
+                    "A mensagem está vazia."
+
+            });
+
+        }
+
+
+        /* =================================================
+           CATALOGAR OS CARROS
+        ================================================= */
+
+        const catalogo =
+            carros.map((carro) => {
+
+                return `
+
+VEÍCULO: ${carro.nome}
+
+PREÇO: ${carro.preco}
 
 DESCRIÇÃO:
 ${carro.descricaoCompleta}
 
 ESPECIFICAÇÕES:
-${carro.specs.join("\n")}
+${Array.isArray(carro.specs)
+    ? carro.specs.join("\n")
+    : ""
+}
 
 CORES:
-${carro.cores.join(", ")}
+${Array.isArray(carro.cores)
+    ? carro.cores.join(", ")
+    : ""
+}
+
 `;
 
-        }).join("\n---------------------------\n");
+            }).join(
+                "\n----------------------------\n"
+            );
 
 
-        const instrucoes = `
-Você é o assistente virtual da
+        /* =================================================
+           INSTRUÇÕES DA IA
+        ================================================= */
+
+        const instructions = `
+
+Você é o assistente virtual oficial da
 CONCESSIONÁRIA MULT MARCA.
 
-Você atende clientes interessados em carros.
+Você atende clientes através do chat do
+site da concessionária.
 
-Seu idioma é português do Brasil.
+Seu idioma é português brasileiro.
 
-Seja simpático, natural, educado e objetivo.
+Seja simpático, educado, natural e objetivo.
 
-Seu nome é:
-Assistente da Concessionária Mult Marca.
+Você pode conversar normalmente.
 
-Nunca diga que você é o ChatGPT.
+Pode responder cumprimentos, dúvidas,
+perguntas sobre carros e perguntas gerais.
 
-Você está atendendo clientes pelo chat
-do próprio site da concessionária.
+Quando o cliente perguntar sobre os carros
+da concessionária, utilize o catálogo fornecido.
 
-Use o catálogo abaixo para responder.
+REGRAS:
 
-IMPORTANTE:
+1. Nunca invente veículos.
 
-- Não invente veículos.
-- Não invente preços.
-- Não invente quilometragem.
-- Não invente especificações.
-- Não invente cores.
-- Não diga que um carro está disponível se isso
-  não estiver informado.
-- Se não souber alguma informação, diga que
-  um consultor pode confirmar.
-- Nunca invente financiamento.
-- Nunca invente descontos.
-- Nunca invente formas de pagamento.
+2. Nunca invente preços.
 
-Quando o cliente demonstrar interesse em um carro,
-seja prestativo e incentive o contato com um consultor.
+3. Nunca invente quilometragem.
 
-Se perguntarem qual é o carro mais barato,
-compare os preços do catálogo.
+4. Nunca invente ano.
 
-Se perguntarem qual é o carro mais caro,
-compare os preços do catálogo.
+5. Nunca invente motor.
 
-Se perguntarem por carros esportivos,
-mostre opções relevantes do catálogo.
+6. Nunca invente câmbio.
 
-CATÁLOGO:
+7. Nunca invente condições de financiamento.
+
+8. Nunca invente descontos.
+
+9. Se uma informação não estiver no catálogo,
+   diga que um consultor pode confirmar.
+
+10. Não diga que você é o ChatGPT.
+
+11. Seu nome é:
+    Assistente da Concessionária Mult Marca.
+
+12. Não diga que é um funcionário humano.
+
+13. Se o cliente demonstrar interesse em comprar,
+    ajude-o a continuar a conversa.
+
+14. Responda sempre diretamente ao que o cliente
+    perguntou.
+
+15. Não repita o catálogo inteiro quando o cliente
+    perguntar sobre apenas um veículo.
+
+CATÁLOGO ATUAL:
 
 ${catalogo}
+
 `;
 
 
-        const resposta = await openai.responses.create({
+        /* =================================================
+           LIMPAR HISTÓRICO
+        ================================================= */
 
-            model: "gpt-5.6-luna",
+        const mensagensValidas =
+            historico
+                .filter(item => {
 
-            instructions: instrucoes,
+                    return (
 
-            input: [
+                        item &&
+                        typeof item.content === "string" &&
+                        (
+                            item.role === "user" ||
+                            item.role === "assistant"
+                        )
 
-                ...historico.slice(-20),
+                    );
 
-                {
-                    role: "user",
-                    content: mensagem
-                }
-
-            ]
-
-        });
+                })
+                .slice(-20);
 
 
-        res.json({
+        /* =================================================
+           GARANTIR A MENSAGEM ATUAL
+        ================================================= */
 
-            resposta:
-                resposta.output_text ||
-                "Desculpe, não consegui responder."
+        const ultima =
+            mensagensValidas[
+                mensagensValidas.length - 1
+            ];
+
+
+        if (
+            !ultima ||
+            ultima.role !== "user" ||
+            ultima.content !== mensagem
+        ) {
+
+            mensagensValidas.push({
+
+                role: "user",
+
+                content: mensagem
+
+            });
+
+        }
+
+
+        /* =================================================
+           CHAMAR OPENAI
+        ================================================= */
+
+        const response =
+            await client.responses.create({
+
+                model: "gpt-5.6-luna",
+
+                instructions:
+
+                    instructions,
+
+                input:
+
+                    mensagensValidas
+
+            });
+
+
+        const texto =
+            response.output_text;
+
+
+        if (!texto) {
+
+            return res.status(500).json({
+
+                erro:
+                    "A IA não retornou texto."
+
+            });
+
+        }
+
+
+        /* =================================================
+           RETORNAR RESPOSTA
+        ================================================= */
+
+        return res.json({
+
+            resposta: texto
 
         });
 
     }
 
-    catch (erro) {
+    catch (error) {
 
         console.error(
-            "ERRO DA IA:",
-            erro
+            "ERRO OPENAI:",
+            error
         );
 
-        res.status(500).json({
 
-            resposta:
-                "No momento estou com dificuldade para responder. Tente novamente em alguns instantes."
+        return res.status(500).json({
+
+            erro:
+                "Erro ao conversar com a inteligência artificial."
 
         });
 
@@ -1389,17 +1761,53 @@ ${catalogo}
 });
 
 
-const PORT =
-    process.env.PORT || 3000;
+/* =====================================================
+   TESTE DO SERVIDOR
+===================================================== */
 
+app.get("/api/status", (req, res) => {
+
+    res.json({
+
+        online: true,
+
+        sistema:
+            "Concessionária Mult Marca",
+
+        chat:
+            "online"
+
+    });
+
+});
+
+
+/* =====================================================
+   INICIAR SERVIDOR
+===================================================== */
 
 app.listen(
     PORT,
     () => {
 
+        console.log("");
         console.log(
-            `Concessionária Mult Marca online em http://localhost:${PORT}`
+            "========================================"
         );
+        console.log(
+            " CONCESSIONÁRIA MULT MARCA"
+        );
+        console.log(
+            " CHAT COM IA ONLINE"
+        );
+        console.log(
+            "========================================"
+        );
+        console.log("");
+        console.log(
+            `Acesse: http://localhost:${PORT}`
+        );
+        console.log("");
 
     }
 );
@@ -1408,7 +1816,7 @@ app.listen(
 {
   "name": "concessionaria-mult-marca",
   "version": "1.0.0",
-  "description": "Site da Concessionária Mult Marca com assistente de IA",
+  "description": "Concessionária Mult Marca com chat de IA",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
